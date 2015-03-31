@@ -1,0 +1,142 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+a:link {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica;
+  font-size: 16px;
+  margin: 0;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+}
+
+.header-button {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.header-button:hover {
+  background-color: #eaefff;
+}
+
+.header-button button{
+  cursor: pointer;
+  font-size: 15px;
+  padding: 0 8px 0 8px;
+}
+
+.stream-list {
+  background-color: #fff;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stream-list li {
+  border-top: 1px solid #e0e0e0;
+}
+
+.stream-list li:first-child {
+  border-top: 0;
+}
+
+.stream-list li a {
+  font-size: 14px;
+}
+
+.stream-list li a:hover {
+  background-color: #eaefff;
+}
+
+.stream-list li a:visited {
+  color: #888;
+}
+
+.stream-list li .detail-disclosure {
+  display: block;
+  padding: 10px;
+}
+
+.stream-list li .more-link {
+  color: #7396ff;
+  cursor: pointer;
+  line-height: 44px;
+  display: block;
+  text-align: center;
+}
+
+.stream-list li a .story p {
+  margin: 0;
+}
+
+.stream-list li a .story .metadata {
+  display: block;
+  color: #666d74;
+  font-size: 12px;
+}
+
+.stream-list li a .story .metadata span {
+  display: inline-block;
+}
+
+.stream-list li a .story .snippet {
+  color: #666d74;
+}
+
+.stream-list li a:visited .story .metadata,
+.stream-list li a:visited .story .snippet {
+  color: #888;
+}
+
+.view {
+  position: relative;
+  margin: auto;
+}
+
+.view header {
+  background-color: #fbfcff;
+  border-bottom: 1px solid #ddd;
+  height: 44px;
+  line-height: 44px;
+  left: 0;
+  top: 0;
+  right: 0;
+  position: fixed;
+}
+
+.view header h1{
+  text-align: center;
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0 65px 0 65px;
+}
+
+.view .stream {
+  margin-top: 44px;
+}
+
+@media only screen and (min-width: 788px) {
+  body {
+    background-color: #fbfcff;
+  }
+  .view {
+    background-color: #fff;
+    box-shadow: 0 0 1px #aaa;
+    max-width: 700px;
+  }
+  .view header {
+    background-color: #fff;
+    position: static;
+  }
+  .view .stream {
+    margin-top: 0;
+  }
+}

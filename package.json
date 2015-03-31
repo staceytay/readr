@@ -1,0 +1,27 @@
+{
+  "name": "readr",
+  "version": "0.0.1",
+  "description": "An aggregator for RSS feeds and maybe more.",
+  "main": "js/app.js",
+  "scripts": {
+    "build": "browserify . | uglifyjs -cm > js/bundle.js",
+    "build:watch": "watchify -o js/bundle.js -v -d js/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stacey Tay",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^0.13.1"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "reactify": "^1.1.0",
+    "uglify-js": "^2.4.17",
+    "watchify": "2.3.0"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
