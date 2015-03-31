@@ -33,10 +33,16 @@ var Story = React.createClass({
 });
 
 var Stream = React.createClass({
+  getDefaultProps: function() {
+    return {
+      incrementEntriesBy: 20
+    };
+  },
   getInitialState: function() {
-    return ({
+    return {
+      displayCount: 20,
       entries: []
-    });
+    };
   },
   componentWillMount: function() {
     var Stream = this;
@@ -70,15 +76,26 @@ var Stream = React.createClass({
     });
   },
   render: function() {
-    var entries = this.state.entries;
+    var displayCount = this.state.displayCount,
+        entries = this.state.entries;
     entries.sort(function(a, b) {
       return b.date - a.date;
     });
 
-    var listItems = entries.slice(0, 30).map(function(entry, i) {
+    var listItems = entries.slice(0, displayCount).map(function(entry, i) {
       return <Story key={i} entry={entry} />;
     });
 
+    if (entries.length > displayCount) {
+      var showMore = function() {
+        this.setState({
+          displayCount: displayCount + this.props.incrementEntriesBy
+        });
+      }.bind(this);
+      listItems.push(
+          <li key={listItems.length}><a className="more-link" onClick={showMore}>More</a></li>
+      );
+    }
     return (
       <div className="stream">
         <section>
