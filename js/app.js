@@ -35,7 +35,8 @@ var Story = React.createClass({
 var Stream = React.createClass({
   getDefaultProps: function() {
     return {
-      incrementEntriesBy: 20
+      incrementEntriesBy: 20,
+      pollInterval: 15 * 60 * 1000
     };
   },
   getInitialState: function() {
@@ -44,36 +45,56 @@ var Stream = React.createClass({
       entries: []
     };
   },
-  componentWillMount: function() {
-    var Stream = this;
-    google.load("feeds", "1");
-    google.setOnLoadCallback(function() {
-      Stream.props.urls.map(function(feedURL) {
-        var feed = new google.feeds.Feed(feedURL);
-        feed.setNumEntries(8);
-        feed.load(function(result) {
-          console.log(feedURL, result);
-          if (result.error) {
-            console.log('Stream: Error:', feedURL, result.error);
-          }
-          else {
-            var entries = result.feed.entries.map(function(entry) {
-              return ({
-                feedTitle: result.feed.title,
-                title: entry.title,
-                author: entry.author,
-                link: entry.link,
-                date: entry.publishedDate? new Date(entry.publishedDate): null,
-                snippet: entry.contentSnippet
-              });
+  componentWillReceiveProps: function(nextProps) {
+    this.loadFeeds(nextProps.feedURLs);
+  },
+  componentDidMount: function() {
+    var componentSetup = function() {
+      this.loadFeeds(this.props.feedURLs);
+      this.intervalID = setInterval(function() {
+        console.log('setInterval', this);
+        this.loadFeeds(this.props.feedURLs);
+      }.bind(this), this.props.pollInterval);
+    }.bind(this);
+
+    if (google.feeds) {
+      componentSetup();
+    }
+    else {
+      google.load("feeds", "1");
+      google.setOnLoadCallback(componentSetup);
+    }
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.intervalID);
+  },
+  loadFeeds: function(feedURLs) {
+    this.setState({entries:[]});
+    feedURLs.map(function(feedURL) {
+      var feed = new google.feeds.Feed(feedURL);
+      feed.setNumEntries(8);
+      feed.load(function(result) {
+        console.log('Stream: loadFeeds', feedURL, result);
+        if (result.error) {
+          console.log('loadFeeds: Error:', feedURL, result.error);
+        }
+        else {
+          var entries = result.feed.entries.map(function(entry) {
+            return ({
+              feedTitle: result.feed.title,
+              title: entry.title,
+              author: entry.author,
+              link: entry.link,
+              date: entry.publishedDate? new Date(entry.publishedDate): null,
+              snippet: entry.contentSnippet
             });
-            Stream.setState({
-              entries: Stream.state.entries.concat(entries)
-            });
-          }
-        });
-      });
-    });
+          });
+          this.setState({
+            entries: this.state.entries.concat(entries)
+          });
+        }
+      }.bind(this));
+    }, this);
   },
   render: function() {
     var displayCount = this.state.displayCount,
