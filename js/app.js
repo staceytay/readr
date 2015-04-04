@@ -284,38 +284,36 @@ var Login = React.createClass({
       error: null
     };
   },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var email = React.findDOMNode(this.refs.email).value,
-        password = React.findDOMNode(this.refs.password).value;
-    if (!email || !password) {
-      return;
-    }
-    this.firebaseRef.authWithPassword({
-      email: email,
-      password: password
-    }, function (error, authData) {
+  fbLogin: function() {
+    this.firebaseRef.authWithOAuthPopup("facebook", function(error, authData) {
+      console.log('fbLogin', authData);
       if (error) {
-        this.setState({error: error});
-      } else {
+        this.setState({error: error.message});
+      }
+      else {
+        this.firebaseRef.child('users').child(authData.uid).set({
+          provider: authData.provider,
+          name: authData.facebook.displayName,
+          firstName: authData.facebook.cachedUserProfile.first_name,
+          email: authData.facebook.email,
+          picture: authData.facebook.cachedUserProfile.picture.data.url
+        });
         this.context.router.transitionTo('home');
       }
-    }.bind(this));
+    }.bind(this), {
+      remember: 'sessionOnly',
+      scope: 'email,public_profile'
+    });
   },
   render: function() {
     var alert;
     if (this.state.error) {
-      console.log(this.state.error);
-      alert = <p className="error-text">{this.state.error.message}</p>;
+      alert = <p className="error-text">{this.state.error}</p>;
     }
     return (
       <div>
         {alert}
-        <form className="login-form" onSubmit={this.handleSubmit}>
-          <input type="email" placeholder="Email" ref="email" />
-          <input type="password" placeholder="Password" ref="password" />
-          <input type="submit" value="Log In" />
-        </form>
+        <button className="fb-login" onClick={this.fbLogin}>Login with Facebook</button>
       </div>
     );
   }
