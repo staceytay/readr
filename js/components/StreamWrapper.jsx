@@ -103,7 +103,7 @@ var Stream = React.createClass({
         });
       }.bind(this);
       listItems.push(
-          <li key={listItems.length}><a className="more-link" onClick={showMore}>More</a></li>
+        <li key={listItems.length}><a className="more-link" onClick={showMore}>More</a></li>
       );
     }
     return (
@@ -113,12 +113,6 @@ var Stream = React.createClass({
         </section>
       </div>
     );
-  }
-});
-
-var About = React.createClass({
-  render: function() {
-    return null;
   }
 });
 
