@@ -134,7 +134,7 @@ var Stream = React.createClass({
 });
 
 var StreamWrapper = React.createClass({
-  componentWillMount: function() {
+  componentDidMount: function() {
     this.firebaseRef = new Firebase(FIREBASE_URL);
     this.loadFeedURLs();
   },
