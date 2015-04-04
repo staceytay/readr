@@ -8,6 +8,7 @@ var Router = require('react-router'),
     RouteHandler = Router.RouteHandler;
 var Header = require('./components/Header.jsx'),
     Login = require('./components/Login.jsx'),
+    Logout = require('./components/Logout.jsx'),
     NotFound = require('./components/NotFound.jsx'),
     Settings = require('./components/Settings.jsx'),
     StreamWrapper = require('./components/StreamWrapper.jsx');
@@ -17,7 +18,9 @@ var View = React.createClass({
     return (
       <div className="view">
         <Header />
-        <RouteHandler {...this.props} />
+        <div className="page-content">
+          <RouteHandler {...this.props} />
+        </div>
       </div>
     );
   }
@@ -27,6 +30,7 @@ var routes = (
   <Route name="home" handler={View} path="/">
     <DefaultRoute handler={StreamWrapper} />
     <Route name="login" path="login" handler={Login} />
+    <Route name="logout" path="logout" handler={Logout} />
     <Route name="settings" handler={Settings} />
     <NotFoundRoute handler={NotFound}/>
   </Route>

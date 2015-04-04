@@ -24,41 +24,47 @@ var Header = React.createClass({
     };
   },
   render: function() {
-    var homeButton = (
-      <a className="header-button header-button-left" href={this.context.router.makeHref('home')}>
+    var makeHref = this.context.router.makeHref;
+    var home = (
+      <a className="header-button header-button-left" href={makeHref('home')}>
         <button>Home</button>
       </a>
-    ),
-        loginButton = (
-          <a className="header-button header-button-right" href={this.context.router.makeHref('login')}>
-            <button>Log In</button>
-          </a>
-        ),
-        settingsButton = (
-          <a className="header-button header-button-right" href={this.context.router.makeHref('settings')}>
-            <button>Settings</button>
-          </a>
-        );
+    );
+    var login = (
+      <a className="header-button header-button-right" href={makeHref('login')}>
+        <button>Log In</button>
+      </a>
+    );
+    var logout = (
+      <a className="header-button header-button-right" href={makeHref('logout')}>
+        <button>Log Out</button>
+      </a>
+    );
+    var settings = (
+      <a className="header-button header-button-right" href={makeHref('settings')}>
+        <button>Settings</button>
+      </a>
+    );
 
     var leftHeaderButton, rightHeaderButton;
     if (this.state.loggedIn) {
       if (this.context.router.isActive('settings')) {
-        leftHeaderButton = homeButton;
-        rightHeaderButton = null;
+        leftHeaderButton = home;
+        rightHeaderButton = logout;
       }
       else {
         leftHeaderButton = null;
-        rightHeaderButton = settingsButton;
+        rightHeaderButton = settings;
       }
     }
     else {
       if (this.context.router.isActive('login')) {
-        leftHeaderButton = homeButton;
+        leftHeaderButton = home;
         rightHeaderButton = null;
       }
       else {
         leftHeaderButton = null;
-        rightHeaderButton = loginButton;
+        rightHeaderButton = login;
       }
     }
 
