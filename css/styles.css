@@ -19,22 +19,43 @@ header a:visited {
   text-align: center;
 }
 
-.add-feed span {
-  color: #666d74;
-  font-size: 12px;
-  font-weight: bold;
+.add-feed form input[type=url] {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 4px;
+  width: 100%;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
 }
 
-.add-feed form input[type=url] {
-  border: 1px solid rgb(238, 238, 238);
-  border-radius: 2px;
-  padding: 4px;
-  width: 98%;
+::-webkit-input-placeholder {
+  color: #bbb;
+  text-align: center;
 }
 
 .add-feed form input[type=url]:focus {
   border: 1px solid #95b0ff;
   outline: 0;
+}
+
+.add-feed form input[type=submit] {
+  background-color: #7396ff;
+  border: 0;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  height: 28px;
+  margin-top: 8px;
+  outline: 0;
+  padding: 4px 12px;
+  -webkit-appearance: none;
+}
+
+.add-feed form input[type=submit]:hover {
+  background-color: #eaefff;
 }
 
 .alert {
@@ -54,7 +75,6 @@ header a:visited {
   display: block;
   font-size: 14px;
   margin: auto;
-  margin-top: 22px;
   outline: 0;
   padding: 8px 16px 8px 16px;
 }
@@ -85,6 +105,7 @@ header a:visited {
 .header-button button {
   background-color: transparent;
   border: 0;
+  color: #111;
   cursor: pointer;
   font-size: 14px;
   padding: 0 8px 0 8px;
@@ -96,13 +117,9 @@ header a:visited {
   color: #002595;
 }
 
-.login-page {
-  margin-top: 68px;
-}
-
 .login-page,
 .settings-page {
-  padding: 0 0 24px 0;
+  padding: 24px 0 24px 0;
 }
 
 .stream-list {
@@ -206,9 +223,6 @@ header a:visited {
 @media only screen and (min-width: 788px) {
   body {
     background-color: #fbfcff;
-  }
-  .login-page {
-    margin-top: 0;
   }
   .view {
     background-color: #fff;
