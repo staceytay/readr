@@ -195,13 +195,71 @@ var About = React.createClass({
 });
 
 var Header = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+  componentDidMount: function() {
+    console.log('Header: componentDidMount');
+    this.firebaseRef = new Firebase(FIREBASE_URL);
+    this.firebaseRef.onAuth(function(authData) {
+      this.setState({
+        loggedIn: authData? true: false
+      });
+    }.bind(this));
+  },
+  componentWillUnmount: function() {
+    console.log('Header: componentWillUnmount');
+    this.firebaseRef.off();
+  },
+  getInitialState: function() {
+    return {
+      loggedIn: false
+    };
+  },
   render: function() {
+    var homeButton = (
+      <a className="header-button header-button-left" href={this.context.router.makeHref('home')}>
+        <button>Home</button>
+      </a>
+    ),
+        loginButton = (
+          <a className="header-button header-button-right" href={this.context.router.makeHref('login')}>
+            <button>Log In</button>
+          </a>
+        ),
+        settingsButton = (
+          <a className="header-button header-button-right" href={this.context.router.makeHref('settings')}>
+            <button>Settings</button>
+          </a>
+        );
+
+    var leftHeaderButton, rightHeaderButton;
+    if (this.state.loggedIn) {
+      if (this.context.router.isActive('settings')) {
+        leftHeaderButton = homeButton;
+        rightHeaderButton = null;
+      }
+      else {
+        leftHeaderButton = null;
+        rightHeaderButton = settingsButton;
+      }
+    }
+    else {
+      if (this.context.router.isActive('login')) {
+        leftHeaderButton = homeButton;
+        rightHeaderButton = null;
+      }
+      else {
+        leftHeaderButton = null;
+        rightHeaderButton = loginButton;
+      }
+    }
+
     return (
       <header>
+        {leftHeaderButton}
         <h1>Readr</h1>
-        <a className="header-button" href="/about">
-          <button>About</button>
-        </a>
+        {rightHeaderButton}
       </header>
     );
   }

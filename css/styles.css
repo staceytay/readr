@@ -19,15 +19,22 @@ button {
 .header-button {
   cursor: pointer;
   position: absolute;
-  right: 0;
   top: 0;
+}
+
+.header-button-left {
+  left: 0;
+}
+
+.header-button-right {
+  right: 0;
 }
 
 .header-button:hover {
   background-color: #eaefff;
 }
 
-.header-button button{
+.header-button button {
   cursor: pointer;
   font-size: 15px;
   padding: 0 8px 0 8px;
