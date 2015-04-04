@@ -1,6 +1,10 @@
 "use strict";
 window.React = React; // export for http://fb.me/react-devtools
 var React = require('react');
+var Router = require('react-router'),
+    DefaultRoute = Router.DefaultRoute,
+    Route = Router.Route,
+    RouteHandler = Router.RouteHandler;
 
 var FIREBASE_URL = process.env.FIREBASE_URL;
 
@@ -209,13 +213,17 @@ var View = React.createClass({
     return (
       <div className="view">
         <Header />
-        <Stream urls={feedURLs}/>
+        <RouteHandler {...this.props} />
       </div>
     );
   }
 });
 
-React.render(
-  <View />,
-  document.getElementById('app')
+var routes = (
+  <Route name="home" handler={View} path="/">
+    <DefaultRoute handler={StreamWrapper} />
+  </Route>
 );
+Router.run(routes, function (Handler, state) {
+  React.render(<Handler params={state.params} />, document.getElementById('app'));
+});
