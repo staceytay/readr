@@ -162,11 +162,25 @@ var StreamWrapper = React.createClass({
     var message;
     if (!this.state.loggedIn) {
       // Display welcome message
-      message = <p className="welcome">Welcome message here</p>;
+      message = (
+        <div className="welcome">
+          Hi! Readr is a simple RSS feed aggregator similar to Safari's shared links.
+          Readr's code is open-sourced on <a className="link-text"
+          href="https://github.com/staceytay/readr">GitHub</a>. Below are entries taken
+          from the <a className="link-text"
+          href="http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml">NYTimes
+          feed</a>.
+        </div>
+      );
     }
     else if (this.state.feedURLs.length === 0) {
       // If logged in and no feeds, show instructions on how to add them
-      message = <p>Add feeds!</p>;
+      message = (
+        <div className="welcome">
+          Looks like you're not subscribed to any feeds yet. Get started by
+          adding a blog or site in settings.
+        </div>
+      );
     }
     return (
       <div className="stream-wrapper">
