@@ -319,6 +319,12 @@ var Login = React.createClass({
   }
 });
 
+var Settings = React.createClass({
+  render: function() {
+    // Add and edit feeds
+    return <p>Some settings here...</p>;
+  }
+});
 
 var View = React.createClass({
   render: function() {
@@ -334,6 +340,7 @@ var View = React.createClass({
 var routes = (
   <Route name="home" handler={View} path="/">
     <Route name="login" path="login" handler={Login} />
+    <Route name="settings" handler={Settings} />
     <DefaultRoute handler={StreamWrapper} />
   </Route>
 );
