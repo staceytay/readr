@@ -1,8 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600);
 
-a:link,
-a:visited {
-  color: inherit;
+a:link {
   text-decoration: none;
 }
 
@@ -12,9 +10,58 @@ body {
   margin: 0;
 }
 
-button {
-  background-color: transparent;
+header a:visited {
+  color: inherit;
+}
+
+.add-feed {
+  padding: 10px;
+  text-align: center;
+}
+
+.add-feed span {
+  color: #666d74;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.add-feed form input[type=url] {
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 2px;
+  padding: 4px;
+  width: 98%;
+}
+
+.add-feed form input[type=url]:focus {
+  border: 1px solid #95b0ff;
+  outline: 0;
+}
+
+.alert {
+  border-bottom: 1px solid #d9534f;
+  color: #4e5459;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.fb-login,
+.gl-login {
+  background-color: #3b5998;
   border: 0;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  margin: auto;
+  margin-top: 22px;
+  outline: 0;
+  padding: 8px 16px 8px 16px;
+}
+
+.gl-login {
+  background-color: #d73d32;
+  width: 168px;
 }
 
 .header-button {
@@ -36,9 +83,26 @@ button {
 }
 
 .header-button button {
+  background-color: transparent;
+  border: 0;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   padding: 0 8px 0 8px;
+  pointer-events: none;
+}
+
+.link-text,
+.link-text:visited {
+  color: #002595;
+}
+
+.login-page {
+  margin-top: 68px;
+}
+
+.login-page,
+.settings-page {
+  padding: 0 0 24px 0;
 }
 
 .stream-list {
@@ -57,6 +121,7 @@ button {
 }
 
 .stream-list li a {
+  color: inherit;
   font-size: 14px;
 }
 
@@ -104,6 +169,13 @@ button {
   color: #888;
 }
 
+.welcome {
+  border-bottom: 1px solid #7396ff;
+  color: #4e5459;
+  font-size: 14px;
+  padding: 10px;
+}
+
 .view {
   position: relative;
   margin: auto;
@@ -127,13 +199,16 @@ button {
   margin: 0 65px 0 65px;
 }
 
-.view .stream-wrapper {
+.view .page-content {
   margin-top: 44px;
 }
 
 @media only screen and (min-width: 788px) {
   body {
     background-color: #fbfcff;
+  }
+  .login-page {
+    margin-top: 0;
   }
   .view {
     background-color: #fff;
@@ -144,7 +219,7 @@ button {
     background-color: #fff;
     position: static;
   }
-  .view .stream-wrapper {
+  .view .page-content {
     margin-top: 0;
   }
 }

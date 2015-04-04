@@ -45,10 +45,10 @@ var Login = React.createClass({
   render: function() {
     var alert;
     if (this.state.error) {
-      alert = <p className="error-text">{this.state.error}</p>;
+      alert = <div className="alert">{this.state.error}</div>;
     }
     return (
-      <div>
+      <div className="login-page">
         {alert}
         <button className="fb-login" onClick={this.fbLogin}>Login with Facebook</button>
       </div>
