@@ -20,7 +20,7 @@ var Story = React.createClass({
       <li>
         <a className="detail-disclosure" href={entry.link}>
           <div className="story">
-            <strong className="feed-title">{entry.feedTitle}</strong>
+            <strong className="feed-title" dangerouslySetInnerHTML={{__html: entry.feedTitle}} />
             <p className="title">{entry.title}</p>
             <span className="metadata">
               <span className="date">{entry.date? entry.date.toDateString(): null}</span>
