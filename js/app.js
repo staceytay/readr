@@ -207,6 +207,62 @@ var Header = React.createClass({
   }
 });
 
+var Login = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+  componentDidMount: function() {
+    this.firebaseRef = new Firebase(FIREBASE_URL);
+    // Redirect if user is logged in
+    if (this.firebaseRef.getAuth()) {
+      this.context.router.transitionTo('home');
+    }
+  },
+  componentWillUnmount: function() {
+    this.firebaseRef.off();
+  },
+  getInitialState: function() {
+    return {
+      error: null
+    };
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var email = React.findDOMNode(this.refs.email).value,
+        password = React.findDOMNode(this.refs.password).value;
+    if (!email || !password) {
+      return;
+    }
+    this.firebaseRef.authWithPassword({
+      email: email,
+      password: password
+    }, function (error, authData) {
+      if (error) {
+        this.setState({error: error});
+      } else {
+        this.context.router.transitionTo('home');
+      }
+    }.bind(this));
+  },
+  render: function() {
+    var alert;
+    if (this.state.error) {
+      console.log(this.state.error);
+      alert = <p className="error-text">{this.state.error.message}</p>;
+    }
+    return (
+      <div>
+        {alert}
+        <form className="login-form" onSubmit={this.handleSubmit}>
+          <input type="email" placeholder="Email" ref="email" />
+          <input type="password" placeholder="Password" ref="password" />
+          <input type="submit" value="Log In" />
+        </form>
+      </div>
+    );
+  }
+});
+
 
 var View = React.createClass({
   render: function() {
@@ -221,6 +277,7 @@ var View = React.createClass({
 
 var routes = (
   <Route name="home" handler={View} path="/">
+    <Route name="login" path="login" handler={Login} />
     <DefaultRoute handler={StreamWrapper} />
   </Route>
 );
