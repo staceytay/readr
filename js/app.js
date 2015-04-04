@@ -2,6 +2,8 @@
 window.React = React; // export for http://fb.me/react-devtools
 var React = require('react');
 
+var FIREBASE_URL = process.env.FIREBASE_URL;
+
 var Story = React.createClass({
   propTypes: {
     entry: React.PropTypes.shape({
@@ -127,6 +129,61 @@ var Stream = React.createClass({
   }
 });
 
+var StreamWrapper = React.createClass({
+  componentWillMount: function() {
+    this.firebaseRef = new Firebase(FIREBASE_URL);
+    this.loadFeedURLs();
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.loadFeedURLs();
+  },
+  componentWillUnmount: function() {
+    this.firebaseRef.off();
+  },
+  getInitialState: function() {
+    return {
+      feedURLs: [],
+      loggedIn: false
+    };
+  },
+  loadFeedURLs: function() {
+    var authData = this.firebaseRef.getAuth(),
+        feedDataRef;
+    if (authData) {
+      feedDataRef = new Firebase(FIREBASE_URL + '/feeds/' + authData.uid);
+      this.setState({loggedIn:true});
+    }
+    else {
+      // Display sample feeds
+      feedDataRef = new Firebase(FIREBASE_URL + '/feeds/sample');
+    }
+    feedDataRef.on('value', function(snapshot) {
+      var feedURLs = [];
+      for (var key in snapshot.val()) {
+        feedURLs.push(snapshot.val()[key]);
+      }
+      this.setState({feedURLs:feedURLs});
+    }.bind(this));
+  },
+  render: function() {
+    var message;
+    if (!this.state.loggedIn) {
+      // Display welcome message
+      message = <p className="welcome">Welcome message here</p>;
+    }
+    else if (this.state.feedURLs.length === 0) {
+      // If logged in and no feeds, show instructions on how to add them
+      message = <p>Add feeds!</p>;
+    }
+    return (
+      <div className="stream-wrapper">
+        {message}
+        <Stream feedURLs={this.state.feedURLs} />
+      </div>
+    );
+  }
+});
+
 var About = React.createClass({
   render: function() {
     return null;
@@ -146,22 +203,6 @@ var Header = React.createClass({
   }
 });
 
-var feedURLs = [
-  'http://open.blogs.nytimes.com/feed/',
-  'http://lifehacker.com/tag/how-i-work/rss',
-  'http://fivethirtyeight.com/features/feed/',
-  'http://www.awsarchitectureblog.com/atom.xml',
-  'http://instagram-engineering.tumblr.com/rss',
-  'https://www.mattcutts.com/blog/feed/',
-  'http://musicmachinery.com/feed/',
-  'http://obsessionwithregression.blogspot.com/feeds/posts/default',
-  'http://opinionator.blogs.nytimes.com/category/the-stone/feed/',
-  'http://www.aaronsw.com/2002/feeds/pgessays.rss',
-  'http://facebook.github.io/react/feed.xml',
-  'http://www.newyorker.com/feed/books/joshua-rothman',
-  'http://xkcd.com/atom.xml',
-  'http://feeds.feedburner.com/holman'
-];
 
 var View = React.createClass({
   render: function() {
