@@ -50,20 +50,10 @@ var Stream = React.createClass({
     this.loadFeeds(nextProps.feedURLs);
   },
   componentDidMount: function() {
-    var componentSetup = function() {
+    this.loadFeeds(this.props.feedURLs);
+    this.intervalID = setInterval(function() {
       this.loadFeeds(this.props.feedURLs);
-      this.intervalID = setInterval(function() {
-        this.loadFeeds(this.props.feedURLs);
-      }.bind(this), this.props.pollInterval);
-    }.bind(this);
-
-    if (google.feeds) {
-      componentSetup();
-    }
-    else {
-      google.load("feeds", "1");
-      google.setOnLoadCallback(componentSetup);
-    }
+    }.bind(this), this.props.pollInterval);
   },
   componentWillUnmount: function() {
     clearInterval(this.intervalID);
