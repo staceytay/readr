@@ -148,7 +148,7 @@ var StreamWrapper = React.createClass({
     }
     else {
       // Display sample feeds
-      feedDataRef = new Firebase(FIREBASE_URL + '/feeds/sample');
+      feedDataRef = new Firebase(FIREBASE_URL + '/sampleFeeds');
     }
     feedDataRef.on('value', function(snapshot) {
       var feedURLs = [];
