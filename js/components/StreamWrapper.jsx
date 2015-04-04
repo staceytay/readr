@@ -1,10 +1,5 @@
-"use strict";
-window.React = React; // export for http://fb.me/react-devtools
 var React = require('react');
-var Router = require('react-router'),
-    DefaultRoute = Router.DefaultRoute,
-    Route = Router.Route,
-    RouteHandler = Router.RouteHandler;
+var Router = require('react-router');
 
 var FIREBASE_URL = process.env.FIREBASE_URL;
 
@@ -58,7 +53,6 @@ var Stream = React.createClass({
     var componentSetup = function() {
       this.loadFeeds(this.props.feedURLs);
       this.intervalID = setInterval(function() {
-        console.log('setInterval', this);
         this.loadFeeds(this.props.feedURLs);
       }.bind(this), this.props.pollInterval);
     }.bind(this);
@@ -80,7 +74,6 @@ var Stream = React.createClass({
       var feed = new google.feeds.Feed(feedURL);
       feed.setNumEntries(8);
       feed.load(function(result) {
-        console.log('Stream: loadFeeds', feedURL, result);
         if (result.error) {
           console.log('loadFeeds: Error:', feedURL, result.error);
         }
@@ -130,6 +123,12 @@ var Stream = React.createClass({
         </section>
       </div>
     );
+  }
+});
+
+var About = React.createClass({
+  render: function() {
+    return null;
   }
 });
 
@@ -188,162 +187,4 @@ var StreamWrapper = React.createClass({
   }
 });
 
-var About = React.createClass({
-  render: function() {
-    return null;
-  }
-});
-
-var Header = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-  componentDidMount: function() {
-    console.log('Header: componentDidMount');
-    this.firebaseRef = new Firebase(FIREBASE_URL);
-    this.firebaseRef.onAuth(function(authData) {
-      this.setState({
-        loggedIn: authData? true: false
-      });
-    }.bind(this));
-  },
-  componentWillUnmount: function() {
-    console.log('Header: componentWillUnmount');
-    this.firebaseRef.off();
-  },
-  getInitialState: function() {
-    return {
-      loggedIn: false
-    };
-  },
-  render: function() {
-    var homeButton = (
-      <a className="header-button header-button-left" href={this.context.router.makeHref('home')}>
-        <button>Home</button>
-      </a>
-    ),
-        loginButton = (
-          <a className="header-button header-button-right" href={this.context.router.makeHref('login')}>
-            <button>Log In</button>
-          </a>
-        ),
-        settingsButton = (
-          <a className="header-button header-button-right" href={this.context.router.makeHref('settings')}>
-            <button>Settings</button>
-          </a>
-        );
-
-    var leftHeaderButton, rightHeaderButton;
-    if (this.state.loggedIn) {
-      if (this.context.router.isActive('settings')) {
-        leftHeaderButton = homeButton;
-        rightHeaderButton = null;
-      }
-      else {
-        leftHeaderButton = null;
-        rightHeaderButton = settingsButton;
-      }
-    }
-    else {
-      if (this.context.router.isActive('login')) {
-        leftHeaderButton = homeButton;
-        rightHeaderButton = null;
-      }
-      else {
-        leftHeaderButton = null;
-        rightHeaderButton = loginButton;
-      }
-    }
-
-    return (
-      <header>
-        {leftHeaderButton}
-        <h1>Readr</h1>
-        {rightHeaderButton}
-      </header>
-    );
-  }
-});
-
-var Login = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-  componentDidMount: function() {
-    this.firebaseRef = new Firebase(FIREBASE_URL);
-    // Redirect if user is logged in
-    if (this.firebaseRef.getAuth()) {
-      this.context.router.transitionTo('home');
-    }
-  },
-  componentWillUnmount: function() {
-    this.firebaseRef.off();
-  },
-  getInitialState: function() {
-    return {
-      error: null
-    };
-  },
-  fbLogin: function() {
-    this.firebaseRef.authWithOAuthPopup("facebook", function(error, authData) {
-      console.log('fbLogin', authData);
-      if (error) {
-        this.setState({error: error.message});
-      }
-      else {
-        this.firebaseRef.child('users').child(authData.uid).set({
-          provider: authData.provider,
-          name: authData.facebook.displayName,
-          firstName: authData.facebook.cachedUserProfile.first_name,
-          email: authData.facebook.email,
-          picture: authData.facebook.cachedUserProfile.picture.data.url
-        });
-        this.context.router.transitionTo('home');
-      }
-    }.bind(this), {
-      remember: 'sessionOnly',
-      scope: 'email,public_profile'
-    });
-  },
-  render: function() {
-    var alert;
-    if (this.state.error) {
-      alert = <p className="error-text">{this.state.error}</p>;
-    }
-    return (
-      <div>
-        {alert}
-        <button className="fb-login" onClick={this.fbLogin}>Login with Facebook</button>
-      </div>
-    );
-  }
-});
-
-var Settings = React.createClass({
-  render: function() {
-    // Add and edit feeds
-    return <p>Some settings here...</p>;
-  }
-});
-
-var View = React.createClass({
-  render: function() {
-    return (
-      <div className="view">
-        <Header />
-        <RouteHandler {...this.props} />
-      </div>
-    );
-  }
-});
-
-var routes = (
-  <Route name="home" handler={View} path="/">
-    <Route name="login" path="login" handler={Login} />
-    <Route name="settings" handler={Settings} />
-    <DefaultRoute handler={StreamWrapper} />
-  </Route>
-);
-Router.run(routes, function (Handler, state) {
-  React.render(<Handler params={state.params} />, document.getElementById('app'));
-});
+module.exports = StreamWrapper;
