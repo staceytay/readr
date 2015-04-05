@@ -1,5 +1,6 @@
 var React = require('react');
 var Router = require('react-router');
+var Footer = require('./Footer.jsx');
 
 var FIREBASE_URL = process.env.FIREBASE_URL;
 
@@ -51,6 +52,7 @@ var Login = React.createClass({
       <div className="login-page">
         {alert}
         <button className="fb-login" onClick={this.fbLogin}>Login with Facebook</button>
+        <Footer />
       </div>
     );
   }

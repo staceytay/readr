@@ -10,6 +10,18 @@ body {
   margin: 0;
 }
 
+footer {
+  color: #4e5459;
+  font-size: 12px;
+  padding-top: 54px;
+  text-align: center;
+}
+
+footer a,
+footer a:visited {
+  color: #002595;
+}
+
 header a:visited {
   color: inherit;
 }
