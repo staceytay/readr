@@ -1,7 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600);
 
 a:link {
-  color: inherit;
   text-decoration: none;
 }
 
@@ -11,26 +10,181 @@ body {
   margin: 0;
 }
 
-button {
-  background-color: transparent;
+footer {
+  color: #4e5459;
+  font-size: 12px;
+  padding-top: 54px;
+  text-align: center;
+}
+
+footer a,
+footer a:visited {
+  color: #002595;
+}
+
+header a:visited {
+  color: inherit;
+}
+
+.add-feed {
+  padding: 10px;
+  text-align: right;
+}
+
+.add-feed form input[type=url] {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 4px;
+  width: 100%;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-input-placeholder {
+  color: #bbb;
+  text-align: center;
+}
+
+.add-feed form input[type=url]:focus {
+  border: 1px solid #95b0ff;
+  outline: 0;
+}
+
+.add-feed form input[type=submit] {
+  background-color: #7396ff;
   border: 0;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  height: 28px;
+  margin-top: 8px;
+  outline: 0;
+  padding: 4px 12px;
+  -webkit-appearance: none;
+}
+
+.add-feed form input[type=submit]:hover {
+  background-color: #eaefff;
+}
+
+.alert {
+  border-bottom: 1px solid #d9534f;
+  color: #4e5459;
+  font-size: 14px;
+  margin-bottom: 24px;
+  margin-top: -24px;
+  padding: 10px;
+}
+
+.fb-login,
+.gl-login {
+  background-color: #3b5998;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  margin: auto;
+  outline: 0;
+  padding: 8px 16px 8px 16px;
+}
+
+.gl-login {
+  background-color: #d73d32;
+  width: 168px;
 }
 
 .header-button {
   cursor: pointer;
   position: absolute;
-  right: 0;
   top: 0;
+}
+
+.header-button-left {
+  left: 0;
+}
+
+.header-button-right {
+  right: 0;
 }
 
 .header-button:hover {
   background-color: #eaefff;
 }
 
-.header-button button{
+.header-button button {
+  background-color: transparent;
+  border: 0;
+  color: #111;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   padding: 0 8px 0 8px;
+  pointer-events: none;
+}
+
+.info,
+.welcome {
+  border-bottom: 1px solid #7396ff;
+  color: #4e5459;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.link-text,
+.link-text:visited {
+  color: #002595;
+}
+
+.login-page,
+.settings-page {
+  padding: 24px 0 12px 0;
+}
+
+.settings-page h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.settings-page .info {
+  /* Offset the top padding */
+  margin-bottom: 24px;
+  margin-top: -24px;
+}
+
+.settings-page .subscribed-feeds {
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: right;
+}
+
+.settings-page .feed-list {
+  list-style: none;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.settings-page .feed-list button {
+  background-color: transparent;
+  border: 0;
+  color: #d73d32;
+  cursor: pointer;
+  font-size: 14px;
+  outline: 0;
+  padding: 0;
+  right: 0;
+}
+
+.settings-page .feed-list li .feed-url {
+  color: #4e5459;
+  /* display: inline; */
+  font-size: 14px;
+  margin: 0;
+  word-wrap: break-word;
 }
 
 .stream-list {
@@ -49,6 +203,7 @@ button {
 }
 
 .stream-list li a {
+  color: inherit;
   font-size: 14px;
 }
 
@@ -112,14 +267,14 @@ button {
   position: fixed;
 }
 
-.view header h1{
+.view header h1 {
   text-align: center;
   font-size: 18px;
   font-weight: normal;
   margin: 0 65px 0 65px;
 }
 
-.view .stream {
+.view .page-content {
   margin-top: 44px;
 }
 
@@ -130,13 +285,13 @@ button {
   .view {
     background-color: #fff;
     box-shadow: 0 0 1px #aaa;
-    max-width: 700px;
+    max-width: 500px;
   }
   .view header {
     background-color: #fff;
     position: static;
   }
-  .view .stream {
+  .view .page-content {
     margin-top: 0;
   }
 }
