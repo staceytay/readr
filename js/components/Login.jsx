@@ -39,7 +39,7 @@ var Login = React.createClass({
         this.context.router.transitionTo('home');
       }
     }.bind(this), {
-      remember: 'sessionOnly',
+      remember: 'default',
       scope: 'email,public_profile'
     });
   },
