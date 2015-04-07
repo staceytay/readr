@@ -141,7 +141,50 @@ header a:visited {
 
 .login-page,
 .settings-page {
-  padding: 24px 0 24px 0;
+  padding: 24px 0 12px 0;
+}
+
+.settings-page h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.settings-page .info {
+  /* Offset the top padding */
+  margin-bottom: 24px;
+  margin-top: -24px;
+}
+
+.settings-page .subscribed-feeds {
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: right;
+}
+
+.settings-page .feed-list {
+  list-style: none;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.settings-page .feed-list button {
+  background-color: transparent;
+  border: 0;
+  color: #d73d32;
+  cursor: pointer;
+  font-size: 14px;
+  outline: 0;
+  padding: 0;
+  right: 0;
+}
+
+.settings-page .feed-list li .feed-url {
+  color: #4e5459;
+  /* display: inline; */
+  font-size: 14px;
+  margin: 0;
+  word-wrap: break-word;
 }
 
 .stream-list {
